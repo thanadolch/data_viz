@@ -1,0 +1,639 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled49.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyMafLa7InjfcFvm8y54yARl"
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "wDBr6w3yWybs",
+        "outputId": "efde2521-93a4-468d-97e9-f3539f38397d"
+      },
+      "source": [
+        "from google.colab import drive\n",
+        "drive.mount('/content/drive')"
+      ],
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(\"/content/drive\", force_remount=True).\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "IEqaivizW8m4"
+      },
+      "source": [
+        "import pandas as pd\n",
+        "import os\n",
+        "import datetime as dt\n",
+        "import matplotlib.pyplot as plt\n",
+        "from datetime import datetime\n",
+        "from datetime import time"
+      ],
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "tjbRXCu-X6IQ"
+      },
+      "source": [
+        "path = '/content/drive/My Drive/DVZ'"
+      ],
+      "execution_count": 6,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 330
+        },
+        "id": "CP8XmZ0RYHi2",
+        "outputId": "509c9746-26ff-4eee-a881-fb1f90471df9"
+      },
+      "source": [
+        "search_request = pd.read_csv(os.path.join(path,'search_request.csv'))\n",
+        "search_request.head()"
+      ],
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "/usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py:2718: DtypeWarning: Columns (7,8,9) have mixed types.Specify dtype option on import or set low_memory=False.\n",
+            "  interactivity=interactivity, compiler=compiler, result=result)\n"
+          ],
+          "name": "stderr"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Unnamed: 0</th>\n",
+              "      <th>search_id</th>\n",
+              "      <th>search_timestamp</th>\n",
+              "      <th>user_agent</th>\n",
+              "      <th>q</th>\n",
+              "      <th>user_id</th>\n",
+              "      <th>session_id</th>\n",
+              "      <th>number_of_result</th>\n",
+              "      <th>lat</th>\n",
+              "      <th>long</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>0</td>\n",
+              "      <td>683de889-f923-494e-9d46-44a3d67b7259</td>\n",
+              "      <td>2018-06-14 12:34:35.449</td>\n",
+              "      <td>Wongnai/8.17.3 rv:8.17.3.3921 (iPhone5,4; iOS;...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5lqjjikta19d296mo7g2h1k86p</td>\n",
+              "      <td>18</td>\n",
+              "      <td>12.6347</td>\n",
+              "      <td>101.463</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>1</td>\n",
+              "      <td>4a811230-ffa4-4631-a4c8-5d0394137d02</td>\n",
+              "      <td>2018-06-14 17:11:19.469</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_4 like M...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>1r3iotmp0o9slom91stdt9vivc</td>\n",
+              "      <td>10</td>\n",
+              "      <td>14.8009</td>\n",
+              "      <td>102.534</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>2</td>\n",
+              "      <td>7ad6ee8e-438e-4bea-9183-74dcef9e358e</td>\n",
+              "      <td>2018-06-14 13:22:31.736</td>\n",
+              "      <td>Mozilla/5.0 (Linux; Android 7.0; SAMSUNG SM-J7...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5ci1eo4v5u9dha4ppgu94ue7p6</td>\n",
+              "      <td>8</td>\n",
+              "      <td>13.7383</td>\n",
+              "      <td>100.371</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>3</td>\n",
+              "      <td>0c17a5f5-fa89-40f4-ae94-a8659268f827</td>\n",
+              "      <td>2018-06-02 12:37:27.331</td>\n",
+              "      <td>Mozilla/5.0 (Linux; Android 7.1.1; SM-N950F Bu...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>39n535qgje9kpojp0grhfj8umk</td>\n",
+              "      <td>12</td>\n",
+              "      <td>12.6669</td>\n",
+              "      <td>101.861</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>4</td>\n",
+              "      <td>6870dc3a-5602-44fc-80ed-df0a7783df9d</td>\n",
+              "      <td>2018-06-02 11:19:22.404</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_3_1 like...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5pa03h6lj691to60erver1l8o4</td>\n",
+              "      <td>14</td>\n",
+              "      <td>12.2372</td>\n",
+              "      <td>99.88</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "   Unnamed: 0                             search_id  ...      lat     long\n",
+              "0           0  683de889-f923-494e-9d46-44a3d67b7259  ...  12.6347  101.463\n",
+              "1           1  4a811230-ffa4-4631-a4c8-5d0394137d02  ...  14.8009  102.534\n",
+              "2           2  7ad6ee8e-438e-4bea-9183-74dcef9e358e  ...  13.7383  100.371\n",
+              "3           3  0c17a5f5-fa89-40f4-ae94-a8659268f827  ...  12.6669  101.861\n",
+              "4           4  6870dc3a-5602-44fc-80ed-df0a7783df9d  ...  12.2372    99.88\n",
+              "\n",
+              "[5 rows x 10 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 7
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "u7g3jb6xak62",
+        "outputId": "6814f180-b49f-4d6f-e9db-21ac514e8659"
+      },
+      "source": [
+        "search_request['search_timestamp'] = [i.strftime('%Y-%m-%d') if isinstance(i,datetime) else i for i in search_request['search_timestamp']]\n",
+        "type(search_request.iloc[2,2])"
+      ],
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "str"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 8
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 296
+        },
+        "id": "lbFD2JdQYbXL",
+        "outputId": "f076b9c0-eac3-424f-d16a-6eae7a7bc5ea"
+      },
+      "source": [
+        "search_request['search_timestamp'] = pd.to_datetime(search_request['search_timestamp'],format ='%Y/%m/%d %H:%M:%S.%f',errors='coerce')\n",
+        "search_request.head()"
+      ],
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Unnamed: 0</th>\n",
+              "      <th>search_id</th>\n",
+              "      <th>search_timestamp</th>\n",
+              "      <th>user_agent</th>\n",
+              "      <th>q</th>\n",
+              "      <th>user_id</th>\n",
+              "      <th>session_id</th>\n",
+              "      <th>number_of_result</th>\n",
+              "      <th>lat</th>\n",
+              "      <th>long</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>0</td>\n",
+              "      <td>683de889-f923-494e-9d46-44a3d67b7259</td>\n",
+              "      <td>2018-06-14 12:34:35.449</td>\n",
+              "      <td>Wongnai/8.17.3 rv:8.17.3.3921 (iPhone5,4; iOS;...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5lqjjikta19d296mo7g2h1k86p</td>\n",
+              "      <td>18</td>\n",
+              "      <td>12.6347</td>\n",
+              "      <td>101.463</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>1</td>\n",
+              "      <td>4a811230-ffa4-4631-a4c8-5d0394137d02</td>\n",
+              "      <td>2018-06-14 17:11:19.469</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_4 like M...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>1r3iotmp0o9slom91stdt9vivc</td>\n",
+              "      <td>10</td>\n",
+              "      <td>14.8009</td>\n",
+              "      <td>102.534</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>2</td>\n",
+              "      <td>7ad6ee8e-438e-4bea-9183-74dcef9e358e</td>\n",
+              "      <td>2018-06-14 13:22:31.736</td>\n",
+              "      <td>Mozilla/5.0 (Linux; Android 7.0; SAMSUNG SM-J7...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5ci1eo4v5u9dha4ppgu94ue7p6</td>\n",
+              "      <td>8</td>\n",
+              "      <td>13.7383</td>\n",
+              "      <td>100.371</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>3</td>\n",
+              "      <td>0c17a5f5-fa89-40f4-ae94-a8659268f827</td>\n",
+              "      <td>2018-06-02 12:37:27.331</td>\n",
+              "      <td>Mozilla/5.0 (Linux; Android 7.1.1; SM-N950F Bu...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>39n535qgje9kpojp0grhfj8umk</td>\n",
+              "      <td>12</td>\n",
+              "      <td>12.6669</td>\n",
+              "      <td>101.861</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>4</td>\n",
+              "      <td>6870dc3a-5602-44fc-80ed-df0a7783df9d</td>\n",
+              "      <td>2018-06-02 11:19:22.404</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_3_1 like...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5pa03h6lj691to60erver1l8o4</td>\n",
+              "      <td>14</td>\n",
+              "      <td>12.2372</td>\n",
+              "      <td>99.88</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "   Unnamed: 0                             search_id  ...      lat     long\n",
+              "0           0  683de889-f923-494e-9d46-44a3d67b7259  ...  12.6347  101.463\n",
+              "1           1  4a811230-ffa4-4631-a4c8-5d0394137d02  ...  14.8009  102.534\n",
+              "2           2  7ad6ee8e-438e-4bea-9183-74dcef9e358e  ...  13.7383  100.371\n",
+              "3           3  0c17a5f5-fa89-40f4-ae94-a8659268f827  ...  12.6669  101.861\n",
+              "4           4  6870dc3a-5602-44fc-80ed-df0a7783df9d  ...  12.2372    99.88\n",
+              "\n",
+              "[5 rows x 10 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 9
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "5qKCkawaZvdg",
+        "outputId": "248565fd-f374-401d-9b0b-eae3ee705341"
+      },
+      "source": [
+        "type(search_request.iloc[2,2])"
+      ],
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "pandas._libs.tslibs.timestamps.Timestamp"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 10
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "crzDW_NFeXp9"
+      },
+      "source": [
+        "times = search_request['search_timestamp'].dt.time"
+      ],
+      "execution_count": 11,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "islPcTLLej-p",
+        "outputId": "392d9e75-94d4-4239-e3ae-272da68d4fb8"
+      },
+      "source": [
+        "type(times[2])"
+      ],
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "datetime.time"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 15
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "KuO9jcdUfREW"
+      },
+      "source": [
+        "search_request['times'] = times"
+      ],
+      "execution_count": 16,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "dQJ2uJtmeMRN"
+      },
+      "source": [
+        "from datetime import time"
+      ],
+      "execution_count": 13,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "IZF7b-xccnNp"
+      },
+      "source": [
+        "search1 = search_request[search_request['times'] >= time(hour=11,minute=00,second=00)]\n",
+        "search2 = search1[search1['times'] < time(hour=12,minute=00,second=00)]\n",
+        "search3 = search_request[search_request['times'] >= time(hour=23,minute=00,second=00)]\n",
+        "search23 = search3[search3['times'] < time(hour=23,minute=59,second=00)]"
+      ],
+      "execution_count": 40,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "mtP9TtM9g8vQ",
+        "outputId": "cfdf7ebf-fdc7-4c7b-c3ef-041c26ee1c8b"
+      },
+      "source": [
+        "f'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ 11:00น.-11:59น. เท่ากับ {search2[\"search_timestamp\"].count()} ครั้ง'"
+      ],
+      "execution_count": 43,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            },
+            "text/plain": [
+              "'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ 11:00น.-11:59น. เท่ากับ 738397 ครั้ง'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 43
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "b8tZmzAlifxF",
+        "outputId": "2166b372-04ce-453e-cc7e-80c030c77376"
+      },
+      "source": [
+        "f'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ 23:00น.-23:59น. เท่ากับ {search23[\"search_timestamp\"].count()} ครั้ง'"
+      ],
+      "execution_count": 42,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            },
+            "text/plain": [
+              "'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ 23:00น.-23:59น. เท่ากับ 274778 ครั้ง'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 42
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "A_oTUVxVjbbw",
+        "outputId": "a97bd9b7-4911-4cd8-e56b-595c5b849609"
+      },
+      "source": [
+        "monday_thuresday = search_request[search_request['search_timestamp'].dt.dayofweek <=3]\n",
+        "f'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ วันจันทร์-วันพฤหัสบดี เท่ากับ {monday_thuresday[\"search_timestamp\"].count()} ครั้ง'"
+      ],
+      "execution_count": 51,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            },
+            "text/plain": [
+              "'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ วันจันทร์-วันพฤหัสบดี เท่ากับ 4220697 ครั้ง'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 51
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "WfE2iTW-k6NH",
+        "outputId": "fdadcf17-847f-407e-d289-7ce5fc4d3811"
+      },
+      "source": [
+        "friday_sunday = search_request[search_request['search_timestamp'].dt.dayofweek >3]\n",
+        "f'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ วันศุกร์-วันอาทิตย์ เท่ากับ {friday_sunday[\"search_timestamp\"].count()} ครั้ง'"
+      ],
+      "execution_count": 52,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            },
+            "text/plain": [
+              "'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ วันศุกร์-วันอาทิตย์ เท่ากับ 5783659 ครั้ง'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 52
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "iW5ifo8Ilmxv"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "psBQHwWglAOh"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
