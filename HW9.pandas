@@ -1,0 +1,1109 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled49.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyOri2vmGRR6A0VoxX2h+GWk",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/thanadolch/data_viz/blob/main/HW9.pandas\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "wDBr6w3yWybs",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8aef8abc-7f07-4959-c519-a65e4514b725"
+      },
+      "source": [
+        "from google.colab import drive\n",
+        "drive.mount('/content/drive')"
+      ],
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Mounted at /content/drive\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "IEqaivizW8m4"
+      },
+      "source": [
+        "import pandas as pd\n",
+        "import os\n",
+        "import datetime as dt\n",
+        "import matplotlib.pyplot as plt\n",
+        "from datetime import datetime\n",
+        "from datetime import time"
+      ],
+      "execution_count": 2,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "tjbRXCu-X6IQ"
+      },
+      "source": [
+        "path = '/content/drive/My Drive/DVZ'"
+      ],
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 330
+        },
+        "id": "CP8XmZ0RYHi2",
+        "outputId": "d1588bdd-3664-4415-a5b4-4eaf59ed914a"
+      },
+      "source": [
+        "search_request = pd.read_csv(os.path.join(path,'search_request.csv'))\n",
+        "search_request.head()"
+      ],
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "/usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py:2718: DtypeWarning: Columns (7,8,9) have mixed types.Specify dtype option on import or set low_memory=False.\n",
+            "  interactivity=interactivity, compiler=compiler, result=result)\n"
+          ],
+          "name": "stderr"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Unnamed: 0</th>\n",
+              "      <th>search_id</th>\n",
+              "      <th>search_timestamp</th>\n",
+              "      <th>user_agent</th>\n",
+              "      <th>q</th>\n",
+              "      <th>user_id</th>\n",
+              "      <th>session_id</th>\n",
+              "      <th>number_of_result</th>\n",
+              "      <th>lat</th>\n",
+              "      <th>long</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>0</td>\n",
+              "      <td>683de889-f923-494e-9d46-44a3d67b7259</td>\n",
+              "      <td>2018-06-14 12:34:35.449</td>\n",
+              "      <td>Wongnai/8.17.3 rv:8.17.3.3921 (iPhone5,4; iOS;...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5lqjjikta19d296mo7g2h1k86p</td>\n",
+              "      <td>18</td>\n",
+              "      <td>12.6347</td>\n",
+              "      <td>101.463</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>1</td>\n",
+              "      <td>4a811230-ffa4-4631-a4c8-5d0394137d02</td>\n",
+              "      <td>2018-06-14 17:11:19.469</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_4 like M...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>1r3iotmp0o9slom91stdt9vivc</td>\n",
+              "      <td>10</td>\n",
+              "      <td>14.8009</td>\n",
+              "      <td>102.534</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>2</td>\n",
+              "      <td>7ad6ee8e-438e-4bea-9183-74dcef9e358e</td>\n",
+              "      <td>2018-06-14 13:22:31.736</td>\n",
+              "      <td>Mozilla/5.0 (Linux; Android 7.0; SAMSUNG SM-J7...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5ci1eo4v5u9dha4ppgu94ue7p6</td>\n",
+              "      <td>8</td>\n",
+              "      <td>13.7383</td>\n",
+              "      <td>100.371</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>3</td>\n",
+              "      <td>0c17a5f5-fa89-40f4-ae94-a8659268f827</td>\n",
+              "      <td>2018-06-02 12:37:27.331</td>\n",
+              "      <td>Mozilla/5.0 (Linux; Android 7.1.1; SM-N950F Bu...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>39n535qgje9kpojp0grhfj8umk</td>\n",
+              "      <td>12</td>\n",
+              "      <td>12.6669</td>\n",
+              "      <td>101.861</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>4</td>\n",
+              "      <td>6870dc3a-5602-44fc-80ed-df0a7783df9d</td>\n",
+              "      <td>2018-06-02 11:19:22.404</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_3_1 like...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5pa03h6lj691to60erver1l8o4</td>\n",
+              "      <td>14</td>\n",
+              "      <td>12.2372</td>\n",
+              "      <td>99.88</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "   Unnamed: 0                             search_id  ...      lat     long\n",
+              "0           0  683de889-f923-494e-9d46-44a3d67b7259  ...  12.6347  101.463\n",
+              "1           1  4a811230-ffa4-4631-a4c8-5d0394137d02  ...  14.8009  102.534\n",
+              "2           2  7ad6ee8e-438e-4bea-9183-74dcef9e358e  ...  13.7383  100.371\n",
+              "3           3  0c17a5f5-fa89-40f4-ae94-a8659268f827  ...  12.6669  101.861\n",
+              "4           4  6870dc3a-5602-44fc-80ed-df0a7783df9d  ...  12.2372    99.88\n",
+              "\n",
+              "[5 rows x 10 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 4
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "u7g3jb6xak62",
+        "outputId": "f8fdd8a6-b0e8-4dc1-e4ba-7e3acbd3a3ef"
+      },
+      "source": [
+        "search_request['search_timestamp'] = [i.strftime('%Y-%m-%d') if isinstance(i,datetime) else i for i in search_request['search_timestamp']]\n",
+        "type(search_request.iloc[2,2])"
+      ],
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "str"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 5
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 296
+        },
+        "id": "lbFD2JdQYbXL",
+        "outputId": "1f5ae1eb-a797-41c9-d707-9361c165ae6f"
+      },
+      "source": [
+        "search_request['search_timestamp'] = pd.to_datetime(search_request['search_timestamp'],format ='%Y/%m/%d %H:%M:%S.%f',errors='coerce')\n",
+        "search_request.head()"
+      ],
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Unnamed: 0</th>\n",
+              "      <th>search_id</th>\n",
+              "      <th>search_timestamp</th>\n",
+              "      <th>user_agent</th>\n",
+              "      <th>q</th>\n",
+              "      <th>user_id</th>\n",
+              "      <th>session_id</th>\n",
+              "      <th>number_of_result</th>\n",
+              "      <th>lat</th>\n",
+              "      <th>long</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>0</td>\n",
+              "      <td>683de889-f923-494e-9d46-44a3d67b7259</td>\n",
+              "      <td>2018-06-14 12:34:35.449</td>\n",
+              "      <td>Wongnai/8.17.3 rv:8.17.3.3921 (iPhone5,4; iOS;...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5lqjjikta19d296mo7g2h1k86p</td>\n",
+              "      <td>18</td>\n",
+              "      <td>12.6347</td>\n",
+              "      <td>101.463</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>1</td>\n",
+              "      <td>4a811230-ffa4-4631-a4c8-5d0394137d02</td>\n",
+              "      <td>2018-06-14 17:11:19.469</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_4 like M...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>1r3iotmp0o9slom91stdt9vivc</td>\n",
+              "      <td>10</td>\n",
+              "      <td>14.8009</td>\n",
+              "      <td>102.534</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>2</td>\n",
+              "      <td>7ad6ee8e-438e-4bea-9183-74dcef9e358e</td>\n",
+              "      <td>2018-06-14 13:22:31.736</td>\n",
+              "      <td>Mozilla/5.0 (Linux; Android 7.0; SAMSUNG SM-J7...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5ci1eo4v5u9dha4ppgu94ue7p6</td>\n",
+              "      <td>8</td>\n",
+              "      <td>13.7383</td>\n",
+              "      <td>100.371</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>3</td>\n",
+              "      <td>0c17a5f5-fa89-40f4-ae94-a8659268f827</td>\n",
+              "      <td>2018-06-02 12:37:27.331</td>\n",
+              "      <td>Mozilla/5.0 (Linux; Android 7.1.1; SM-N950F Bu...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>39n535qgje9kpojp0grhfj8umk</td>\n",
+              "      <td>12</td>\n",
+              "      <td>12.6669</td>\n",
+              "      <td>101.861</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>4</td>\n",
+              "      <td>6870dc3a-5602-44fc-80ed-df0a7783df9d</td>\n",
+              "      <td>2018-06-02 11:19:22.404</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_3_1 like...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5pa03h6lj691to60erver1l8o4</td>\n",
+              "      <td>14</td>\n",
+              "      <td>12.2372</td>\n",
+              "      <td>99.88</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "   Unnamed: 0                             search_id  ...      lat     long\n",
+              "0           0  683de889-f923-494e-9d46-44a3d67b7259  ...  12.6347  101.463\n",
+              "1           1  4a811230-ffa4-4631-a4c8-5d0394137d02  ...  14.8009  102.534\n",
+              "2           2  7ad6ee8e-438e-4bea-9183-74dcef9e358e  ...  13.7383  100.371\n",
+              "3           3  0c17a5f5-fa89-40f4-ae94-a8659268f827  ...  12.6669  101.861\n",
+              "4           4  6870dc3a-5602-44fc-80ed-df0a7783df9d  ...  12.2372    99.88\n",
+              "\n",
+              "[5 rows x 10 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 6
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "5qKCkawaZvdg",
+        "outputId": "8ced9d75-86ad-4482-9487-540f00861e6a"
+      },
+      "source": [
+        "type(search_request.iloc[2,2])"
+      ],
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "pandas._libs.tslibs.timestamps.Timestamp"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 7
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "crzDW_NFeXp9"
+      },
+      "source": [
+        "times = search_request['search_timestamp'].dt.time"
+      ],
+      "execution_count": 8,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "islPcTLLej-p",
+        "outputId": "3cc7620b-d30a-4e85-8ce3-e8ffb1769228"
+      },
+      "source": [
+        "type(times[2])"
+      ],
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "datetime.time"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 9
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "KuO9jcdUfREW"
+      },
+      "source": [
+        "search_request['times'] = times"
+      ],
+      "execution_count": 10,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "dQJ2uJtmeMRN"
+      },
+      "source": [
+        "from datetime import time"
+      ],
+      "execution_count": 11,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "IZF7b-xccnNp"
+      },
+      "source": [
+        "search1 = search_request[search_request['times'] >= time(hour=11,minute=00,second=00)]\n",
+        "search2 = search1[search1['times'] < time(hour=12,minute=00,second=00)]\n",
+        "search3 = search_request[search_request['times'] >= time(hour=23,minute=00,second=00)]\n",
+        "search23 = search3[search3['times'] < time(hour=23,minute=59,second=00)]"
+      ],
+      "execution_count": 12,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "mtP9TtM9g8vQ",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "outputId": "c0d71ce9-721b-4b35-ec80-54055d1703bb"
+      },
+      "source": [
+        "f'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ 11:00น.-11:59น. เท่ากับ {search2[\"search_timestamp\"].count()} ครั้ง'"
+      ],
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            },
+            "text/plain": [
+              "'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ 11:00น.-11:59น. เท่ากับ 738397 ครั้ง'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 13
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "b8tZmzAlifxF",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "outputId": "6ad5fe30-415a-455e-f290-784ba135b5e7"
+      },
+      "source": [
+        "f'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ 23:00น.-23:59น. เท่ากับ {search23[\"search_timestamp\"].count()} ครั้ง'"
+      ],
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            },
+            "text/plain": [
+              "'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ 23:00น.-23:59น. เท่ากับ 274778 ครั้ง'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 14
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "A_oTUVxVjbbw",
+        "outputId": "98af1d9f-435d-49ee-e8b3-699a12b0e625"
+      },
+      "source": [
+        "monday_thuresday = search_request[search_request['search_timestamp'].dt.dayofweek <=3]\n",
+        "f'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ วันจันทร์-วันพฤหัสบดี เท่ากับ {monday_thuresday[\"search_timestamp\"].count()} ครั้ง'"
+      ],
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            },
+            "text/plain": [
+              "'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ วันจันทร์-วันพฤหัสบดี เท่ากับ 4220697 ครั้ง'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 15
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "WfE2iTW-k6NH",
+        "outputId": "60f1deef-79c0-4cd3-ec66-23381ef6a3ec"
+      },
+      "source": [
+        "friday_sunday = search_request[search_request['search_timestamp'].dt.dayofweek >3]\n",
+        "f'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ วันศุกร์-วันอาทิตย์ เท่ากับ {friday_sunday[\"search_timestamp\"].count()} ครั้ง'"
+      ],
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            },
+            "text/plain": [
+              "'จำนวนครั้งในการค้นหาของช่วงเวลาตั้งแต่ วันศุกร์-วันอาทิตย์ เท่ากับ 5783659 ครั้ง'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 16
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "iW5ifo8Ilmxv"
+      },
+      "source": [
+        "day_of_week = search_request['search_timestamp'].dt.dayofweek\n",
+        "search_request['day_of_week'] = day_of_week"
+      ],
+      "execution_count": 17,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "psBQHwWglAOh"
+      },
+      "source": [
+        "graph = search_request.groupby('day_of_week')['search_timestamp'].count()"
+      ],
+      "execution_count": 18,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 312
+        },
+        "id": "X7VOnctujaY2",
+        "outputId": "4ce5cf74-999e-4d79-cfb6-8865513bd885"
+      },
+      "source": [
+        "GG = pd.DataFrame(graph)\n",
+        "GG['day_of_week'] = [0,1,2,3,4,5,6]\n",
+        "plt.bar(GG['day_of_week'],GG['search_timestamp'])\n",
+        "plt.ylabel('Count of searchclick')\n",
+        "plt.xlabel('Day of Week')\n",
+        "plt.title('Number of each day of week')"
+      ],
+      "execution_count": 32,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "Text(0.5, 1.0, 'Number of each day of week')"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 32
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "image/png": "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\n",
+            "text/plain": [
+              "<Figure size 432x288 with 1 Axes>"
+            ]
+          },
+          "metadata": {
+            "tags": [],
+            "needs_background": "light"
+          }
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "_d2HQRnNj3G1"
+      },
+      "source": [
+        "adout = []\n",
+        "for i in search_request['day_of_week']:\n",
+        "    if i <=3 :\n",
+        "        dr =1\n",
+        "    elif i > 3:\n",
+        "        dr =2\n",
+        "    adout.append(dr)"
+      ],
+      "execution_count": 51,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "o2D3O68YhC09"
+      },
+      "source": [
+        "search_request['password'] = adout"
+      ],
+      "execution_count": 53,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "PIYG0P0KiZVt"
+      },
+      "source": [
+        "rt = search_request.groupby('password')['search_timestamp'].count()\n",
+        "table = pd.DataFrame(rt)\n",
+        "table['group'] = ['1','2']"
+      ],
+      "execution_count": 63,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 312
+        },
+        "id": "lt0nVScIfGIz",
+        "outputId": "2fc452fb-7c78-4fcd-8794-b073a8a1682f"
+      },
+      "source": [
+        "plt.bar(table['group'],table['search_timestamp'])\n",
+        "plt.ylabel('Count of searchclick')\n",
+        "plt.xlabel('Group')\n",
+        "plt.title('Number of each day of week')"
+      ],
+      "execution_count": 64,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "Text(0.5, 1.0, 'Number of each day of week')"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 64
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "image/png": "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\n",
+            "text/plain": [
+              "<Figure size 432x288 with 1 Axes>"
+            ]
+          },
+          "metadata": {
+            "tags": [],
+            "needs_background": "light"
+          }
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 586
+        },
+        "id": "p9G_XJ2nfd1U",
+        "outputId": "62d5b8b8-c2ea-4f91-cd02-1c1a61b61841"
+      },
+      "source": [
+        "times_pair = pd.concat([search2,search23])\n",
+        "times_pair"
+      ],
+      "execution_count": 66,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Unnamed: 0</th>\n",
+              "      <th>search_id</th>\n",
+              "      <th>search_timestamp</th>\n",
+              "      <th>user_agent</th>\n",
+              "      <th>q</th>\n",
+              "      <th>user_id</th>\n",
+              "      <th>session_id</th>\n",
+              "      <th>number_of_result</th>\n",
+              "      <th>lat</th>\n",
+              "      <th>long</th>\n",
+              "      <th>times</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>4</td>\n",
+              "      <td>6870dc3a-5602-44fc-80ed-df0a7783df9d</td>\n",
+              "      <td>2018-06-02 11:19:22.404</td>\n",
+              "      <td>Mozilla/5.0 (iPhone; CPU iPhone OS 11_3_1 like...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5pa03h6lj691to60erver1l8o4</td>\n",
+              "      <td>14</td>\n",
+              "      <td>12.2372</td>\n",
+              "      <td>99.88</td>\n",
+              "      <td>11:19:22.404000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>6</th>\n",
+              "      <td>6</td>\n",
+              "      <td>3ecf13ba-be4d-4eb9-9374-a1cca09d1614</td>\n",
+              "      <td>2018-06-22 11:26:40.836</td>\n",
+              "      <td>Wongnai/8.17.3 rv:8.17.3.3921 (iPhone8,4; iOS;...</td>\n",
+              "      <td>ผัดไท</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>1m91ertp1g9a09agkl7dqtej30</td>\n",
+              "      <td>17</td>\n",
+              "      <td>12.4511</td>\n",
+              "      <td>102.249</td>\n",
+              "      <td>11:26:40.836000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>15</th>\n",
+              "      <td>15</td>\n",
+              "      <td>abbf59dd-9631-4b3d-aa57-0bebda18b039</td>\n",
+              "      <td>2018-06-22 11:48:00.258</td>\n",
+              "      <td>Wongnai/10.0 (iPhone10,6; iOS; 11.4; en_TH@cal...</td>\n",
+              "      <td>yum &amp; tum</td>\n",
+              "      <td>6967.0</td>\n",
+              "      <td>668o57pjfa8tpp19ob5de4be8t</td>\n",
+              "      <td>14</td>\n",
+              "      <td>13.7209</td>\n",
+              "      <td>100.527</td>\n",
+              "      <td>11:48:00.258000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>16</th>\n",
+              "      <td>16</td>\n",
+              "      <td>4cda5a26-93a8-4e5c-85ce-7895646bde8c</td>\n",
+              "      <td>2018-06-22 11:51:55.019</td>\n",
+              "      <td>Wongnai/8.17.5 (iPhone9,4; iOS; 11.4; en_TH@ca...</td>\n",
+              "      <td>Godiva</td>\n",
+              "      <td>71411.0</td>\n",
+              "      <td>1b47msi6le9ci8nltjo817m443</td>\n",
+              "      <td>10</td>\n",
+              "      <td>13.7483</td>\n",
+              "      <td>100.54</td>\n",
+              "      <td>11:51:55.019000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>36</th>\n",
+              "      <td>36</td>\n",
+              "      <td>7647c7f2-02d3-4475-b207-fb7ca3daba90</td>\n",
+              "      <td>2018-06-18 11:48:21.744</td>\n",
+              "      <td>Wongnai/8.17.5 (iPhone9,4; iOS; 11.4; en_TH;)</td>\n",
+              "      <td>ชานมไข่มุก square one</td>\n",
+              "      <td>22432.0</td>\n",
+              "      <td>5gbhu646p89t2rvm9t9026h6dj</td>\n",
+              "      <td>11</td>\n",
+              "      <td>13.719</td>\n",
+              "      <td>100.52</td>\n",
+              "      <td>11:48:21.744000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>...</th>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>10003293</th>\n",
+              "      <td>10004166</td>\n",
+              "      <td>c2671f83-e92a-4252-9d21-2fd898271f9b</td>\n",
+              "      <td>2018-06-15 23:09:43.328</td>\n",
+              "      <td>okhttp/3.9.0;WongnaiAndroid 8.16.6;samsung;SM-...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>22kfoqlo0u90ur84b19nt201lg</td>\n",
+              "      <td>22</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>23:09:43.328000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>10003310</th>\n",
+              "      <td>10004183</td>\n",
+              "      <td>bebb851e-1e8f-44db-8506-ccbb885beb79</td>\n",
+              "      <td>2018-06-15 23:09:48.517</td>\n",
+              "      <td>okhttp/3.9.0;WongnaiAndroid 8.16.6;samsung;SM-...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>trmfmbb4v8i8qpj2c8ec1r73c</td>\n",
+              "      <td>22</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>23:09:48.517000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>10003318</th>\n",
+              "      <td>10004191</td>\n",
+              "      <td>ac9d3a26-d3fb-4525-aae1-19eed4436b72</td>\n",
+              "      <td>2018-06-15 23:26:20.494</td>\n",
+              "      <td>okhttp/3.9.0;WongnaiAndroid 8.16.6;samsung;SM-...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>5s15ptlf328j795ha8abd28a9f</td>\n",
+              "      <td>22</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>23:26:20.494000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>10003337</th>\n",
+              "      <td>10004210</td>\n",
+              "      <td>7a6c52a4-3976-44e2-aa23-1349fd299454</td>\n",
+              "      <td>2018-06-15 23:41:48.134</td>\n",
+              "      <td>okhttp/3.9.0;WongnaiAndroid 8.16.6;samsung;SM-...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>92807.0</td>\n",
+              "      <td>116oc2qtqc9psptj9tu02e8tfl</td>\n",
+              "      <td>22</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>23:41:48.134000</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>10003338</th>\n",
+              "      <td>10004211</td>\n",
+              "      <td>afd93871-13d9-4655-8c15-560f0e6a1a6b</td>\n",
+              "      <td>2018-06-15 23:42:18.067</td>\n",
+              "      <td>okhttp/3.9.0;WongnaiAndroid 8.16.6;samsung;SM-...</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>92807.0</td>\n",
+              "      <td>116oc2qtqc9psptj9tu02e8tfl</td>\n",
+              "      <td>22</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>23:42:18.067000</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "<p>1013175 rows × 11 columns</p>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "          Unnamed: 0  ...            times\n",
+              "4                  4  ...  11:19:22.404000\n",
+              "6                  6  ...  11:26:40.836000\n",
+              "15                15  ...  11:48:00.258000\n",
+              "16                16  ...  11:51:55.019000\n",
+              "36                36  ...  11:48:21.744000\n",
+              "...              ...  ...              ...\n",
+              "10003293    10004166  ...  23:09:43.328000\n",
+              "10003310    10004183  ...  23:09:48.517000\n",
+              "10003318    10004191  ...  23:26:20.494000\n",
+              "10003337    10004210  ...  23:41:48.134000\n",
+              "10003338    10004211  ...  23:42:18.067000\n",
+              "\n",
+              "[1013175 rows x 11 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 66
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "ap24KXk1kWoL"
+      },
+      "source": [
+        "adout1 = []\n",
+        "for i in times_pair['times']:\n",
+        "    if i < time(hour=12,minute=00,second=00) :\n",
+        "        dr =1\n",
+        "    elif i > time(hour=12,minute=00,second=00) :\n",
+        "        dr =2\n",
+        "    adout1.append(dr)"
+      ],
+      "execution_count": 73,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "YkgP3tBIlP6L"
+      },
+      "source": [
+        "times_pair['group_times'] = adout1\n",
+        "times_pair.head()\n",
+        "pair_times = times_pair.groupby('group_times')['search_timestamp'].count()\n",
+        "pt = pd.DataFrame(pair_times)\n",
+        "pt['group_times'] = ['11:00-11.59','23:00-23.59']"
+      ],
+      "execution_count": 82,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 312
+        },
+        "id": "iGxSqfK2lVMR",
+        "outputId": "30565711-b9f8-4d95-874a-26f152e6873e"
+      },
+      "source": [
+        "plt.bar(pt['group_times'],pt['search_timestamp'])\n",
+        "plt.ylabel('Count of searchclick')\n",
+        "plt.xlabel('Group')\n",
+        "plt.title('Number of each day of week')\n",
+        "plt.show()\n",
+        "plt.legend"
+      ],
+      "execution_count": 97,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "image/png": "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\n",
+            "text/plain": [
+              "<Figure size 432x288 with 1 Axes>"
+            ]
+          },
+          "metadata": {
+            "tags": [],
+            "needs_background": "light"
+          }
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<function matplotlib.pyplot.legend>"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 97
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "4tc-Tq_SoDgU"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
